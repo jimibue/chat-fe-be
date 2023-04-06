@@ -7,6 +7,7 @@ app.use(express.json())
 app.use(cors())
 
 app.use("/basic", require("./routes/basic.routes"))
+app.use("/multiple", require("./routes/multiple.routes"))
 // don't leave this log here
 // console.log('api key:', process.env.API_KEY)
 app.get('/', (req, res)=>{

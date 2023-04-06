@@ -24,6 +24,32 @@ router.post("/", async (req, res) => {
   }
 });
 
+// ADDED
+router.post("/multiple", async (req, res) => {
+  // not messages plural
+  // is an array of messages[{role, content}]
+  const { messages } = req.body;
+  try {
+    const completion = await my_openai.createChatCompletion({
+      model: "gpt-3.5-turbo", 
+      messages: [
+        {
+          role: "system",
+          // this is not needed to remember the past, but will help
+          // test it.
+          content: `You are great at remembering things in this conversation. you always mention messages from the past.`,
+        },
+        // this is needed to remember the past messages
+        ...messages,
+      ],
+    });
+    res.json({ completion: completion.data.choices[0].message });
+  } catch (err) {
+    console.log("err:", err);
+    res.status(500).json({ err });
+  }
+});
+
 router.get("/test", async (req, res) => {
   try {
     const completion = await my_openai.createChatCompletion({
