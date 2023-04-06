@@ -1,5 +1,11 @@
-const router = require("express").Router();
-const my_openai = require("../config/openai.config");
+import express from 'express';
+import my_openai from "../../config/openai.config.js";
+
+const router = express.Router()
+
+router.get("/", async (req, res) => {
+  res.send('basic working')
+})
 
 // post '/basic' => {message:{user:string, content:string}}
 router.post("/", async (req, res) => {
@@ -95,4 +101,4 @@ router.get("/multiple", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
